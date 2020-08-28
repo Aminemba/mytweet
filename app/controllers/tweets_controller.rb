@@ -14,27 +14,44 @@ class TweetsController < ApplicationController
   end
 
 
-  def new
-    @tweet = current_user.tweets.build
+def new
+    #@tweet = current_user.tweets.build
+  if params[:back]
+    @tweet = Tweeet.new(tweeet_params)
+  else
+    @tweet = Tweeet.new
   end
+end
 
   def edit
   end
 
 
   def create
-   @tweet = current_user.tweets.build(tweet_params)
+    @tweeet = Tweet.new(tweet_params)
 
     respond_to do |format|
-      if @tweet.save
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully created.' }
-        format.json { render :show, status: :created, location: @tweet }
+      if @tweeet.save
+        format.html { redirect_to root_path, notice: 'Tweet was successfully created.' }
+        format.json { render :show, status: :created, location: @tweeet }
       else
         format.html { render :new }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+        format.json { render json: @tweeet.errors, status: :unprocessable_entity }
       end
     end
   end
+
+  def confirm
+        @tweet = Tweet.new(tweeet_params)
+        render :new if @tweet.invalid?
+  end
+
+  def back
+        @tweet = Tweet.edit(tweet_params)
+        render :choose_new_or_edit if @tweet.invalid?
+  end
+
+
 
 
   def update
