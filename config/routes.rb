@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
-  
+
   root "tweets#index"
 
- resources :tweeets do
+ resources :tweets do
    collection do
     post :confirm
    end
