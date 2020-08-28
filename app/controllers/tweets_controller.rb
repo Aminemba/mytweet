@@ -6,7 +6,7 @@ class TweetsController < ApplicationController
   # GET /tweets.json
   def index
     @tweets = Tweet.all.order("created_at DESC")
-    @tweet = Tweet.new
+    #@tweet = Tweet.new
   end
 
 
@@ -17,9 +17,9 @@ class TweetsController < ApplicationController
 def new
     #@tweet = current_user.tweets.build
   if params[:back]
-    @tweet = Tweeet.new(tweeet_params)
+    @tweet = Tweet.new(tweet_params)
   else
-    @tweet = Tweeet.new
+    @tweet = Tweet.new
   end
 end
 
@@ -28,21 +28,21 @@ end
 
 
   def create
-    @tweeet = Tweet.new(tweet_params)
+    @tweet = Tweet.new(tweet_params)
 
     respond_to do |format|
-      if @tweeet.save
+      if @tweet.save
         format.html { redirect_to root_path, notice: 'Tweet was successfully created.' }
-        format.json { render :show, status: :created, location: @tweeet }
+        format.json { render :show, status: :created, location: @tweet }
       else
         format.html { render :new }
-        format.json { render json: @tweeet.errors, status: :unprocessable_entity }
+        format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def confirm
-        @tweet = Tweet.new(tweeet_params)
+        @tweet = Tweet.new(tweet_params)
         render :new if @tweet.invalid?
   end
 
